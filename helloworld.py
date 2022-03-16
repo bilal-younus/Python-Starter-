@@ -421,8 +421,8 @@ import random
 #relative path
 #
 #import pathlib from Path
-path = Path('ecommerce')
-print(path.exists())
+# path = Path('ecommerce')
+# print(path.exists())
 
 # path = Path('emails')
 # print(path.rmdir())
@@ -437,5 +437,31 @@ print(path.exists())
 #pypi and pip
 
 
+#excel spreadsheet
 
+import openpyxl as excel
+
+from openpyxl.chart import BarChart, reference, Reference
+
+wb = excel.load_workbook('transactions.xlsx')
+sheet = wb['Sheet1']
+cell = sheet['a1']
+cell = sheet.cell(1, 1)
+print(cell.value)
+print(sheet.max_row)
+for row in range(2, sheet.max_row +1):
+    # print(row)
+    cell = sheet.cell(row,3)
+    corrected = cell.value * 0.90
+    print(corrected)
+    corrected_price_cell = sheet.cell(row,4)
+    corrected_price_cell.value = corrected
+    print(corrected_price_cell)
+
+values =Reference(sheet , min_row=2 , max_row=sheet.max_row, min_col=4 ,max_col=4)
+chart = BarChart()
+chart.add_data(values)
+chart.add_chart(chart, 'e2')
+
+wb.save('transaction2.xlsx')
 
